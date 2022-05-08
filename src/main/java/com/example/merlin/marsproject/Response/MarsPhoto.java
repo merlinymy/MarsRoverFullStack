@@ -1,11 +1,15 @@
 package com.example.merlin.marsproject.Response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public class MarsPhoto {
     private Long id;
     private Integer sol;
     private MarsCamera camera;
+    //map json to Java
+    @JsonProperty("img_src")
     private String imgSrc;
 
     public Long getId() {
