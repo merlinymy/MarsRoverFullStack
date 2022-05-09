@@ -2,6 +2,7 @@ package com.example.merlin.marsproject.Response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Date;
 import java.util.List;
 
 public class MarsPhoto {
@@ -11,6 +12,25 @@ public class MarsPhoto {
     //map json to Java
     @JsonProperty("img_src")
     private String imgSrc;
+    @JsonProperty("earth_date")
+    private Date earthDate;
+    private Rover rover;
+
+    public Date getEarthDate() {
+        return earthDate;
+    }
+
+    public void setEarthDate(Date earthDate) {
+        this.earthDate = earthDate;
+    }
+
+    public Rover getRover() {
+        return rover;
+    }
+
+    public void setRover(Rover rover) {
+        this.rover = rover;
+    }
 
     public Long getId() {
         return id;
