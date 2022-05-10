@@ -9,13 +9,17 @@
 </head>
 <body>
     <div class="container">
-        <h2>Welcome!!!</h2>
-<!--        Select Mars rovers-->
-        <div class="btn-group btn-group-lg" role="group" aria-label="Basic example" style="margin: 2em 0em">
-            <button type="button" class="btn btn-outline-primary" id="curiosity">Curiosity</button>
-            <button type="button" class="btn btn-outline-primary" id="opportunity">Opportunity</button>
-            <button type="button" class="btn btn-outline-primary" id="spirit">Spirit</button>
-        </div>
+        <h2>Images of Mars Rover</h2>
+        <form method="get" action="" id="formRoverName">
+            <!--        Select Mars rovers-->
+            <input type="hidden" id="roverData" name="marsRoverData" value=""/>
+            <div class="btn-group btn-group-lg" role="group" aria-label="Basic example" style="margin: 2em 0em">
+                <button type="button" class="btn btn-outline-primary" id="MarsCuriosity">Curiosity</button>
+                <button type="button" class="btn btn-outline-primary" id="MarsOpportunity">Opportunity</button>
+                <button type="button" class="btn btn-outline-primary" id="MarsSpirit">Spirit</button>
+            </div>
+        </form>
+
 <!--        Displays images-->
         <div th:each="index : ${#numbers.sequence(0, roverData.photos.size(), 4)}" class="row" style="margin-bottom: 1.5em">
             <div class="col-sm" th:if="${index < roverData.photos.size()}">
