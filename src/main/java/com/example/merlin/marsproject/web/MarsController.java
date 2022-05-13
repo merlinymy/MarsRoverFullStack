@@ -1,15 +1,14 @@
 package com.example.merlin.marsproject.web;
 
 import com.example.merlin.marsproject.Response.MarsRoverApiResponse;
+import com.example.merlin.marsproject.model.MarsModel;
 import com.example.merlin.marsproject.service.MarsRoverApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Objects;
 
 @Controller
 public class MarsController {
@@ -17,15 +16,19 @@ public class MarsController {
     @Autowired
     private MarsRoverApiService marsRoverApiService;
 
-    @GetMapping ("/home")
-    public String postHomeView (ModelMap model, @RequestParam(required = false) String marsRoverData) {
+    @GetMapping ("/")
+    public String postHomeView (ModelMap model, MarsModel marsModel) {
         // If marsRoverData is Empty, set to a default value
-        if (marsRoverData == null) {
-            marsRoverData = "spirit";
+        if (marsModel.getRoverName() == null || Objects.equals(marsModel.getRoverName(), "")) {
+            marsModel.setRoverName("Spirit");
+        }
+        if (marsModel.getSol() == null) {
+            marsModel.setSol(1);
         }
         //populate the model
-        MarsRoverApiResponse roverData = marsRoverApiService.getRoverData(marsRoverData);
+        MarsRoverApiResponse roverData = marsRoverApiService.getRoverData(marsModel);
         model.put("roverData", roverData);
+        model.put("marsModel", marsModel);
         return "index";
     }
 }

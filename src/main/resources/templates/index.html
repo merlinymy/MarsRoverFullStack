@@ -9,15 +9,121 @@
 </head>
 <body>
     <div class="container">
-        <h2>Images of Mars Rover</h2>
+        <h2 style="margin: 2em 0em">Mars Pictures Viewing App</h2>
         <form method="get" action="" id="formRoverName">
             <!--        Select Mars rovers-->
-            <input type="hidden" id="roverData" name="marsRoverData" value=""/>
-            <div class="btn-group btn-group-lg" role="group" aria-label="Basic example" style="margin: 2em 0em">
-                <button type="button" class="btn btn-outline-primary" id="MarsCuriosity">Curiosity</button>
-                <button type="button" class="btn btn-outline-primary" id="MarsOpportunity">Opportunity</button>
-                <button type="button" class="btn btn-outline-primary" id="MarsSpirit">Spirit</button>
+            <input type="hidden" th:field="${marsModel.roverName}"/>
+            <div class="container">
+                <h4>Rover</h4>
+                <div class="btn-group" role="group" style="margin-bottom: 2em">
+                    <div class="row">
+                        <div class="col">
+                            <button type="button" class="btn btn-outline-primary" id="MarsCuriosity">Curiosity</button>
+                        </div>
+                        <div class="col">
+                            <button type="button" class="btn btn-outline-primary" id="MarsOpportunity">Opportunity</button>
+                        </div>
+                        <div class="col">
+                            <button type="button" class="btn btn-outline-primary" id="MarsSpirit">Spirit</button>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <div class="form-group">
+                <div class="container">
+                    <h4>Camera(s)</h4>
+                    <div class="row">
+                        <div class="col-12 col-md-4">
+                            <div class="cform-check form-switch form-check-inline">
+                                <input class="form-check-input" type="checkbox" th:field="${marsModel.camFhaz}">
+                                <label class="form-check-label" for="camFhaz">
+                                    Front Hazard Avoidance Camera
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="cform-check form-switch form-check-inline">
+                                <input class="form-check-input" type="checkbox" th:field="${marsModel.camRhaz}">
+                                <label class="form-check-label" for="camRhaz">
+                                    Rear Hazard Avoidance Camera
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="cform-check form-switch form-check-inline">
+                                <input class="form-check-input" type="checkbox" th:field="${marsModel.camMast}">
+                                <label class="form-check-label" for="camMast">
+                                    Mast Camera
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-4">
+                            <div class="cform-check form-switch form-check-inline">
+                                <input class="form-check-input" type="checkbox" th:field="${marsModel.camChemcam}">
+                                <label class="form-check-label" for="camChemcam">
+                                    Chemistry and Camera Complex
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="cform-check form-switch form-check-inline">
+                                <input class="form-check-input" type="checkbox" th:field="${marsModel.camMahli}">
+                                <label class="form-check-label" for="camMahli">
+                                    Mars Hand Lens Imager
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="cform-check form-switch form-check-inline">
+                                <input class="form-check-input" type="checkbox" th:field="${marsModel.camMardi}">
+                                <label class="form-check-label" for="camMardi">
+                                    Mars Descent Imager
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-4">
+                            <div class="cform-check form-switch form-check-inline">
+                                <input class="form-check-input" type="checkbox" th:field="${marsModel.camNavcam}">
+                                <label class="form-check-label" for="camNavcam">
+                                    Navigation Camera
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="cform-check form-switch form-check-inline">
+                                <input class="form-check-input" type="checkbox" th:field="${marsModel.camPancam}">
+                                <label class="form-check-label" for="camPancam">
+                                    Panoramic Camera
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="cform-check form-switch form-check-inline">
+                                <input class="form-check-input" type="checkbox" th:field="${marsModel.camMinites}">
+                                <label class="form-check-label" for="camMinites">
+                                    Miniature Thermal Emission Spectrometer (Mini-TES)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <h4>Sol (Mars day): </h4>
+                <div class="col-sm-2">
+                    <input type="number" class="form-control" th:field="${marsModel.sol}" min="0" placeholder="1">
+                </div>
+                <button type="submit" class="btn btn-outline-primary btn-lg" style="margin-top: 1em;margin-bottom: 2em">Submit</button>
+            </div>
+
+<!--            <div class="form-group" style="margin-top: 2em;margin-bottom: 0.2em">-->
+
+<!--                <input type="number" class="form-control form-control-lg" th:field="${marsModel.sol}" min="0"/>-->
+<!--            </div>-->
         </form>
 
 <!--        Displays images-->
