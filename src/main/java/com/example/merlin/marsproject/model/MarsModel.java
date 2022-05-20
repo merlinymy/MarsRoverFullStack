@@ -1,6 +1,7 @@
 package com.example.merlin.marsproject.model;
 
 public class MarsModel {
+    private long userId;
     private String roverName;
     private Integer sol;
 
@@ -13,6 +14,23 @@ public class MarsModel {
     private Boolean camNavcam;
     private Boolean camPancam;
     private Boolean camMinites;
+    private Boolean savePref;
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public Boolean getSavePref() {
+        return savePref;
+    }
+
+    public void setSavePref(Boolean savePref) {
+        this.savePref = savePref;
+    }
 
     public String getRoverName() {
         return roverName;
@@ -100,5 +118,24 @@ public class MarsModel {
 
     public void setCamMinites(Boolean camMinites) {
         this.camMinites = camMinites;
+    }
+
+    @Override
+    public String toString() {
+        return "MarsModel{" +
+                "userId=" + userId +
+                ", roverName='" + roverName + '\'' +
+                ", sol=" + sol +
+                ", camFhaz=" + camFhaz +
+                ", camRhaz=" + camRhaz +
+                ", camMast=" + camMast +
+                ", camChemcam=" + camChemcam +
+                ", camMahli=" + camMahli +
+                ", camMardi=" + camMardi +
+                ", camNavcam=" + camNavcam +
+                ", camPancam=" + camPancam +
+                ", camMinites=" + camMinites +
+                ", savePref=" + savePref +
+                '}';
     }
 }

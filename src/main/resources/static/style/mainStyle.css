@@ -1,0 +1,55 @@
+html{
+    font-family: 'Ubuntu Mono', monospace;
+    background-color: black;
+}
+body{
+    width: 1000px;
+    margin: auto auto;
+    padding: 0px 20px 20px 20px;
+    background-color: white;
+    border: 10px solid goldenrod;
+}
+h1 {
+    font-size: 48px;
+    text-align: center;
+    color: black;
+}
+h3,h2 {
+    color: goldenrod;
+    text-align: center;
+    font-size: 36px;
+}
+p {
+    text-align: center;
+    line-height: 1.5;
+    letter-spacing: 1px;
+    font-size: 20px;
+    color: black;
+}
+
+.Home {
+    color: black;
+    font-size: 36px;
+}
+.item {
+    color: black;
+    font-size: 20px;
+}
+.mainLog{
+    color: black;
+    font-size: 20px;
+}
+.Lists{
+    color: black;
+    font-size: 20px;
+}
+.link{
+    color: black;
+    font-size: 20px;
+    text-align: center;
+}
+
+img {
+    display: block;
+    margin: auto auto;
+}

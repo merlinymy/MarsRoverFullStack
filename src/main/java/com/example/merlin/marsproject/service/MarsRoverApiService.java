@@ -8,20 +8,34 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.*;
 
 @Service
 public class MarsRoverApiService {
+
+    private Map<String, List<String>> validCameras = new HashMap<>();
+
+    public Map<String, List<String>> getValidCameras() {
+        return validCameras;
+    }
+
+    public MarsRoverApiService() {
+        validCameras.put("Curiosity", Arrays.asList("FHAZ", "RHAZ", "MAST", "CHEMCAM", "MAHLI", "MARDI", "NAVCAM"));
+        validCameras.put("Opportunity", Arrays.asList("FHAZ", "RHAZ", "NAVCAM", "PANCAM", "MINITES"));
+        validCameras.put("Spirit", Arrays.asList("FHAZ", "RHAZ", "NAVCAM", "PANCAM", "MINITES"));
+    }
+
     private static final String API_KEY = "36PiciLiBgEg5akEnyqeDV4g6S8Pb1tRc7bugGUC";
-    public MarsRoverApiResponse getRoverData(MarsModel marsModel) {
+    public MarsRoverApiResponse getRoverData(MarsModel marsModel) throws InvocationTargetException, IllegalAccessException {
         RestTemplate restTemplate = new RestTemplate();
 
         List<String> apiEndpoint = getApiUrl(marsModel);
         List<MarsPhoto> photos = new ArrayList<>();
         MarsRoverApiResponse response = new MarsRoverApiResponse();
 
-        apiEndpoint.stream().forEach(url -> {
+        apiEndpoint.forEach(url -> {
             MarsRoverApiResponse apiResponse = restTemplate.getForObject(url, response.getClass());
             photos.addAll(apiResponse.getPhotos());
         });
@@ -30,47 +44,29 @@ public class MarsRoverApiService {
 
     }
 
-    public List<String> getApiUrl(MarsModel marsModel) {
+    public List<String> getApiUrl(MarsModel marsModel) throws InvocationTargetException, IllegalAccessException {
         List<String> urls = new ArrayList<>();
-
-        if (marsModel.getCamChemcam() == null &&
-                marsModel.getCamMahli() == null &&
-                marsModel.getCamMardi() == null &&
-                marsModel.getCamChemcam() == null &&
-                marsModel.getCamMast() == null &&
-                marsModel.getCamMinites() == null &&
-                marsModel.getCamNavcam() == null &&
-                marsModel.getCamPancam() == null &&
-                marsModel.getCamRhaz() == null) {
-            urls.add("https://api.nasa.gov/mars-photos/api/v1/rovers/" + marsModel.getRoverName() + "/photos?sol="+marsModel.getSol()+"&api_key="+API_KEY);
+        List<String> defaultUrl = Collections.singletonList("https://api.nasa.gov/mars-photos/api/v1/rovers/" + marsModel.getRoverName() + "/photos?sol=" + marsModel.getSol() + "&api_key=" + API_KEY);
+        Method[] methods = marsModel.getClass().getMethods();
+        int numberOffCam = 9;
+        int offCamCount = 0;
+        for (Method method : methods) {
+            if (method.getName().contains("getCam") &&
+                    (Boolean.FALSE.equals(method.invoke(marsModel)) || method.invoke(marsModel) == null)) {
+                offCamCount++;
+            }
         }
-        if (Boolean.TRUE.equals(marsModel.getCamChemcam())) {
-            urls.add("https://api.nasa.gov/mars-photos/api/v1/rovers/" + marsModel.getRoverName() + "/photos?sol="+marsModel.getSol()+"&api_key="+API_KEY+"&camera=fhaz");
+        // Grab all getCam* methods. If the method starts with "getCam" and returns ture, we build an
+        // api URL to call in order to fetch pictures for a given rover/cam/sol
+        for (Method method : methods) {
+            if (method.getName().contains("getCam") && Boolean.TRUE.equals(method.invoke(marsModel))) {
+               String camName = method.getName().split("getCam")[1].toUpperCase();
+                if (validCameras.get(marsModel.getRoverName()).contains(camName)) {
+                   urls.add("https://api.nasa.gov/mars-photos/api/v1/rovers/" + marsModel.getRoverName() + "/photos?sol="+marsModel.getSol()+"&api_key="+API_KEY+"&camera="+camName);
+               }
+           }
         }
-        if (Boolean.TRUE.equals(marsModel.getCamMahli()) && "Curiosity".equalsIgnoreCase(marsModel.getRoverName())) {
-            urls.add("https://api.nasa.gov/mars-photos/api/v1/rovers/" + marsModel.getRoverName() + "/photos?sol="+marsModel.getSol()+"&api_key="+API_KEY+"&camera=mahli");
-        }
-        if (Boolean.TRUE.equals(marsModel.getCamMardi()) && "Curiosity".equalsIgnoreCase(marsModel.getRoverName())) {
-            urls.add("https://api.nasa.gov/mars-photos/api/v1/rovers/" + marsModel.getRoverName() + "/photos?sol="+marsModel.getSol()+"&api_key="+API_KEY+"&camera=mardi");
-        }
-        if (Boolean.TRUE.equals(marsModel.getCamChemcam()) && "Curiosity".equalsIgnoreCase(marsModel.getRoverName())) {
-            urls.add("https://api.nasa.gov/mars-photos/api/v1/rovers/" + marsModel.getRoverName() + "/photos?sol="+marsModel.getSol()+"&api_key="+API_KEY+"&camera=chemcam");
-        }
-        if (Boolean.TRUE.equals(marsModel.getCamMast()) && "Curiosity".equalsIgnoreCase(marsModel.getRoverName())) {
-            urls.add("https://api.nasa.gov/mars-photos/api/v1/rovers/" + marsModel.getRoverName() + "/photos?sol="+marsModel.getSol()+"&api_key="+API_KEY+"&camera=mast");
-        }
-        if (Boolean.TRUE.equals(marsModel.getCamMinites()) && !"Curiosity".equalsIgnoreCase(marsModel.getRoverName())) {
-            urls.add("https://api.nasa.gov/mars-photos/api/v1/rovers/" + marsModel.getRoverName() + "/photos?sol="+marsModel.getSol()+"&api_key="+API_KEY+"&camera=minites");
-        }
-        if (Boolean.TRUE.equals(marsModel.getCamNavcam())) {
-            urls.add("https://api.nasa.gov/mars-photos/api/v1/rovers/" + marsModel.getRoverName() + "/photos?sol="+marsModel.getSol()+"&api_key="+API_KEY+"&camera=navcam");
-        }
-        if (Boolean.TRUE.equals(marsModel.getCamPancam()) && !"Curiosity".equalsIgnoreCase(marsModel.getRoverName())) {
-            urls.add("https://api.nasa.gov/mars-photos/api/v1/rovers/" + marsModel.getRoverName() + "/photos?sol="+marsModel.getSol()+"&api_key="+API_KEY+"&camera=pancam");
-        }
-        if (Boolean.TRUE.equals(marsModel.getCamRhaz())) {
-            urls.add("https://api.nasa.gov/mars-photos/api/v1/rovers/" + marsModel.getRoverName() + "/photos?sol="+marsModel.getSol()+"&api_key="+API_KEY+"&camera=rhaz");
-        }
-        return urls;
+        return numberOffCam == offCamCount ? defaultUrl : urls;
     }
+
 }

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../Style/mainStyle.css">
+    <meta charset="UTF-8">
+    <title>TablePractice</title>
+</head>
+<body>
+<a href="../index.html">Home</a>
+<h2>Table practice</h2>
+<h3>BASIC table structure</h3>
+<dl>
+    <dt>'table'</dt>
+    <dd>The table element is used to create a table. <br>
+    The contents of the table are written out row by row</dd>
+    <dt>'tr'</dt>
+    <dd>Indicating the start of each row by 'tr'(table row) tag. <br>
+    close the row by '/tr'</dd>
+    <dt>'td'</dt>
+    <dd>table data</dd>
+</dl>
+
+<h3>Table Headings</h3>
+<p>'th' stands for table heading.</p>
+<h3>spanning columns</h3>
+<p>use to combine multiple columns</p>
+<p>syntax: 'td/th colspan="number of columns to merge"'</p>
+
+<hr>
+<h3>spanning rows</h3>
+<p>similar as spanning columns, to merge rows.</p>
+<p>can be used on td or th as well</p>
+<p></p>
+<hr>
+
+<h3>Table test</h3>
+<p>table is write row by row</p>
+<table>
+    <thead>
+    <tr>
+        <th scope="col">photo genre</th>
+        <th scope="col">photo name</th>
+        <th scope="col">resolution</th>
+        <th colspan="3" scope="colgroup">Sizes available</th>
+        <th scope="col">Price ($)</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th scope="row" rowspan="7">Landscape</th>
+        <th scope="row" rowspan="3"><a href="../photoSite/Landscape.html#NB">Natural Bridge</a></th>
+        <td>original</td>
+        <td>A1</td>
+        <td>A2</td>
+        <td>A3</td>
+        <td>10</td>
+    </tr>
+    <tr>
+        <td>2k</td>
+        <td>A3</td>
+        <td>A4</td>
+        <td>A5</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>1080</td>
+        <td>A3</td>
+        <td>A4</td>
+        <td>A5</td>
+        <td>free</td>
+    </tr>
+
+    <tr>
+        <th scope="row" rowspan="2"><a href="../photoSite/Landscape.html#Alaska">Along S Parks Hwy</a></th>
+        <td>original</td>
+        <td>A1</td>
+        <td>A2</td>
+        <td>A3</td>
+        <td>20</td>
+    </tr>
+    <tr>
+        <td>2k</td>
+        <td>A3</td>
+        <td>A4</td>
+        <td>A5</td>
+        <td>5</td>
+    </tr>
+
+    <tr>
+        <th scope="row" rowspan="2"><a href="../photoSite/Landscape.html#RiA">Mt. Denali</a></th>
+        <td>original</td>
+        <td>A1</td>
+        <td>A2</td>
+        <td>A3</td>
+        <td>25</td>
+    </tr>
+    <tr>
+        <td>2k</td>
+        <td>A3</td>
+        <td>A4</td>
+        <td>A5</td>
+        <td>10</td>
+    </tr>
+
+
+    <tr>
+        <th scope="row" rowspan="4">Astrophotography</th>
+        <th scope="row" rowspan="2"><a href="../photoSite/astrophotography.html#Milky">Milky way Convict Lake</a></th>
+        <td>original</td>
+        <td>A1</td>
+        <td>A2</td>
+        <td>A3</td>
+        <td>50</td>
+    </tr>
+    <tr>
+        <td>2k</td>
+        <td>A3</td>
+        <td>A4</td>
+        <td>A5</td>
+        <td>=25</td>
+    </tr>
+
+    <tr>
+        <th scope="row" rowspan="2"><a href="../photoSite/astrophotography.html#MilkyCore">MilkyWay Core</a></th>
+        <td>original</td>
+        <td>A1</td>
+        <td>A2</td>
+        <td>A3</td>
+        <td>50</td>
+    </tr>
+    <tr>
+        <td>2k</td>
+        <td>A3</td>
+        <td>A4</td>
+        <td>A5</td>
+        <td>25</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

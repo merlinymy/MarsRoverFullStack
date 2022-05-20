@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Objects;
 
 @Controller
@@ -16,8 +18,8 @@ public class MarsController {
     @Autowired
     private MarsRoverApiService marsRoverApiService;
 
-    @GetMapping ("/")
-    public String postHomeView (ModelMap model, MarsModel marsModel) {
+    @GetMapping ("/mars")
+    public String getMarsView(ModelMap model, MarsModel marsModel) throws InvocationTargetException, IllegalAccessException {
         // If marsRoverData is Empty, set to a default value
         if (marsModel.getRoverName() == null || Objects.equals(marsModel.getRoverName(), "")) {
             marsModel.setRoverName("Spirit");
@@ -29,6 +31,28 @@ public class MarsController {
         MarsRoverApiResponse roverData = marsRoverApiService.getRoverData(marsModel);
         model.put("roverData", roverData);
         model.put("marsModel", marsModel);
-        return "index";
+        model.put("validCams", marsRoverApiService.getValidCameras().get(marsModel.getRoverName()));
+        return "marsApiProject";
+    }
+    @PostMapping("/mars")
+    public String postMarsView(MarsModel marsModel) {
+        System.out.println(marsModel);
+        return "redirect:/mars";
+    }
+    @GetMapping("/")
+    public String postHomeView() {
+        return "home";
+    }
+    @GetMapping("/photoSite")
+    public String postPhotoSite() {
+        return "/photoSite/picSite";
+    }
+    @GetMapping("/landscape")
+    public String postLandScape() {
+        return "/photoSite/Landscape";
+    }
+    @GetMapping("/astrophotography")
+    public String postAstro() {
+        return "/photoSite/astrophotography";
     }
 }
