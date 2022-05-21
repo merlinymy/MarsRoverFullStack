@@ -1,6 +1,14 @@
 package com.example.merlin.marsproject.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "mars_api_preferences")
 public class MarsModel {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long id;
+
     private long userId;
     private String roverName;
     private Integer sol;
@@ -15,6 +23,14 @@ public class MarsModel {
     private Boolean camPancam;
     private Boolean camMinites;
     private Boolean savePref;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public long getUserId() {
         return userId;
