@@ -2,6 +2,7 @@ package com.example.merlin.marsproject.web;
 
 import com.example.merlin.marsproject.Response.MarsRoverApiResponse;
 import com.example.merlin.marsproject.model.MarsModel;
+import com.example.merlin.marsproject.repository.MarsModelRepository;
 import com.example.merlin.marsproject.service.MarsRoverApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,15 +18,17 @@ public class MarsController {
     //listen for a request, and execute the method
     @Autowired
     private MarsRoverApiService marsRoverApiService;
-
     @GetMapping ("/mars")
-    public String getMarsView(ModelMap model, MarsModel marsModel) throws InvocationTargetException, IllegalAccessException {
+    public String getMarsView(ModelMap model, Long userId) throws InvocationTargetException, IllegalAccessException {
+
+        MarsModel marsModel = new MarsModel();
         // If marsRoverData is Empty, set to a default value
-        if (marsModel.getRoverName() == null || Objects.equals(marsModel.getRoverName(), "")) {
-            marsModel.setRoverName("Spirit");
-        }
-        if (marsModel.getSol() == null) {
-            marsModel.setSol(1);
+        marsModel.setRoverName("Curiosity");
+        marsModel.setSol(1);
+        if (userId == null) {
+            marsModel = marsRoverApiService.savePref(marsModel);
+        } else {
+            marsModel = marsRoverApiService.findByUserId(userId);
         }
         //populate the model
         MarsRoverApiResponse roverData = marsRoverApiService.getRoverData(marsModel);
@@ -36,8 +39,8 @@ public class MarsController {
     }
     @PostMapping("/mars")
     public String postMarsView(MarsModel marsModel) {
-        System.out.println(marsModel);
-        return "redirect:/mars";
+        marsRoverApiService.savePref(marsModel);
+        return "redirect:/mars?userId="+marsModel.getUserId();
     }
     @GetMapping("/")
     public String postHomeView() {

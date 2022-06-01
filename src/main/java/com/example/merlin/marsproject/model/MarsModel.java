@@ -6,10 +6,8 @@ import javax.persistence.*;
 @Table(name = "mars_api_preferences")
 public class MarsModel {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
-
     private long userId;
+    @Column(length = 20)
     private String roverName;
     private Integer sol;
 
@@ -24,13 +22,6 @@ public class MarsModel {
     private Boolean camMinites;
     private Boolean savePref;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public long getUserId() {
         return userId;

@@ -1,7 +1,6 @@
 // Get url and get value of a search parameter
 let url_string = window.location.href
 let url = new URL(url_string)
-let roverTypes = url.searchParams.get('roverName')
 
 //store user data to local
 let userId = url.searchParams.get('userId')
@@ -26,11 +25,15 @@ buttons.forEach(button => button.addEventListener('click', function () {
 }))
 
 
+
+let sol = document.getElementById('sol').value
+let roverTypes = document.getElementById('roverName').value
 highlightBtnByRoverType(roverTypes)
-let sol = url.searchParams.get('sol')
-document.getElementById('sol').value = sol
+if (sol != null && sol !== '' && sol >= 0) {
+    document.getElementById('sol').value = sol
+}
 function highlightBtnByRoverType(roverType) {
-    if ((roverType == null || roverType == '')) {
+    if ((roverType == null || roverType === '')) {
         roverType = 'Spirit'
     }
     document.getElementById('Mars'+roverType).classList.replace('btn-outline-primary', 'btn-primary')

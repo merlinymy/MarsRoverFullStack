@@ -3,7 +3,9 @@ package com.example.merlin.marsproject.service;
 import com.example.merlin.marsproject.Response.MarsPhoto;
 import com.example.merlin.marsproject.Response.MarsRoverApiResponse;
 import com.example.merlin.marsproject.model.MarsModel;
+import com.example.merlin.marsproject.repository.MarsModelRepository;
 import org.apache.el.stream.Stream;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -14,6 +16,8 @@ import java.util.*;
 
 @Service
 public class MarsRoverApiService {
+    @Autowired
+    private MarsModelRepository marsModelRepository;
 
     private Map<String, List<String>> validCameras = new HashMap<>();
 
@@ -69,4 +73,12 @@ public class MarsRoverApiService {
         return numberOffCam == offCamCount ? defaultUrl : urls;
     }
 
+    public MarsModel savePref(MarsModel marsModel) {
+        return marsModelRepository.save(marsModel);
+    }
+
+    public MarsModel findByUserId(Long userId) {
+        MarsModel marsModel = marsModelRepository.findByUserId(userId);
+        return marsModel;
+    }
 }
